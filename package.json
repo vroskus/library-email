@@ -1,6 +1,6 @@
 {
   "name": "@vroskus/library-email",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Email",
   "author": "Vilius Roškus <vilius@regattas.eu>",
   "license": "MIT",
@@ -9,9 +9,6 @@
     "url": "git+https://github.com/vroskus/library-email.git"
   },
   "main": "dist/index.js",
-  "files": [
-    "dist/index.js"
-  ],
   "scripts": {
     "postinstall": "npm run build",
     "build": "tsc",
@@ -20,6 +17,8 @@
     "test:e2e": "echo 'No tests'"
   },
   "dependencies": {
+    "@types/lodash": "4.14.192",
+    "@types/nodemailer": "6.4.7",
     "html-to-text": "9.0.4",
     "lodash": "4.17.21",
     "nodemailer": "6.9.1"
