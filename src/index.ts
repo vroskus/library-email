@@ -1,3 +1,8 @@
+// Global Types
+import type {
+  Transporter,
+} from 'nodemailer';
+
 // Helpers
 import nodemailer from 'nodemailer';
 import {
@@ -27,7 +32,9 @@ type $SendEmailResponse = {
   response: string;
 };
 
-type $Transporter = {
+type $TransporterParams = unknown;
+
+type $Transporter = Transporter | {
   sendMail: (arg0: $SendMailParams) => Promise<$SendEmailResponse>;
 };
 
@@ -107,7 +114,7 @@ class EmailService<C extends Config> {
         };
       }
 
-      const params = {
+      const params: $TransporterParams = {
         auth,
         host,
         port,
