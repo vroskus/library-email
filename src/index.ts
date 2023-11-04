@@ -15,10 +15,10 @@ import type {
 } from './types';
 
 type $SendMailParams = {
-  bcc?: string | Array<string>;
+  bcc?: string | Array<string> | void;
   from: string;
   html: string;
-  replyTo?: string;
+  replyTo?: string | void;
   subject: string;
   text: string;
   to: string | Array<string>;
@@ -70,9 +70,9 @@ class EmailService<C extends Config> {
     username,
   }: {
     host: string;
-    password?: string;
+    password?: string | void;
     port: string;
-    username?: string;
+    username?: string | void;
   }): void {
     this.transporter = {
       sendMail: async ({
