@@ -15,13 +15,13 @@ import type {
 } from './types';
 
 type $SendMailParams = {
-  bcc?: string | Array<string> | void;
+  bcc?: Array<string> | string | void;
   from: string;
   html: string;
   replyTo?: string | void;
   subject: string;
   text: string;
-  to: string | Array<string>;
+  to: Array<string> | string;
 };
 
 type $SendEmailResponse = {
@@ -34,9 +34,9 @@ type $SendEmailResponse = {
 
 type $TransporterParams = unknown;
 
-type $Transporter = Transporter | {
+type $Transporter = {
   sendMail: (arg0: $SendMailParams) => Promise<$SendEmailResponse>;
-};
+} | Transporter;
 
 export type $Config = Config;
 
@@ -132,11 +132,11 @@ class EmailService<C extends Config> {
     subject,
     to,
   }: {
-    bcc?: string | Array<string>;
+    bcc?: Array<string> | string;
     content: string;
     replyTo?: string;
     subject: string;
-    to: string | Array<string>;
+    to: Array<string> | string;
   }): Promise<string> {
     const params = {
       bcc,
