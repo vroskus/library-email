@@ -1,5 +1,6 @@
 // Global Types
 import type {
+  TransportOptions,
   Transporter,
 } from 'nodemailer';
 
@@ -13,6 +14,11 @@ import {
 import type {
   $Config as Config,
 } from './types';
+
+type $Auth = {
+  pass: string,
+  user: string,
+};
 
 type $SendMailParams = {
   bcc?: Array<string> | string | void;
@@ -32,7 +38,12 @@ type $SendEmailResponse = {
   response: string;
 };
 
-type $TransporterParams = unknown;
+type $TransporterParams = TransportOptions & {
+  auth?: $Auth;
+  host: string;
+  port: string;
+  secure?: boolean;
+};
 
 type $Transporter = {
   sendMail: (arg0: $SendMailParams) => Promise<$SendEmailResponse>;
@@ -43,7 +54,7 @@ export type $Config = Config;
 class EmailService<C extends Config> {
   from: string;
 
-  transporter: $Transporter;
+  transporter: $Transporter | null;
 
   constructor({
     email,
@@ -54,6 +65,8 @@ class EmailService<C extends Config> {
     username,
   }: C) {
     this.from = `"${from}" <${email}>`;
+
+    this.transporter = null;
 
     this.#setupTransporter({
       host,
@@ -105,7 +118,7 @@ class EmailService<C extends Config> {
     };
 
     if (host !== '') {
-      let auth;
+      let auth: $Auth | undefined;
 
       if (username && password) {
         auth = {
@@ -148,15 +161,19 @@ class EmailService<C extends Config> {
       to,
     };
 
-    const info: $SendEmailResponse = await this.transporter.sendMail(params);
+    if (this.transporter !== null) {
+      const info: $SendEmailResponse = await this.transporter.sendMail(params);
 
-    // eslint-disable-next-line no-console
-    console.log(
-      'info',
-      info,
-    );
+      // eslint-disable-next-line no-console
+      console.log(
+        'info',
+        info,
+      );
 
-    return info.messageId;
+      return info.messageId;
+    }
+
+    throw new Error('Transporter not initialised');
   }
 }
 
