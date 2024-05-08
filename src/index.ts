@@ -38,12 +38,12 @@ type $SendEmailResponse = {
   response: string;
 };
 
-type $TransporterParams = TransportOptions & {
+type $TransporterParams = {
   auth?: $Auth;
   host: string;
   port: string;
   secure?: boolean;
-};
+} & TransportOptions;
 
 type $Transporter = {
   sendMail: (arg0: $SendMailParams) => Promise<$SendEmailResponse>;
