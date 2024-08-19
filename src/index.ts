@@ -1,7 +1,7 @@
 // Global Types
 import type {
-  TransportOptions,
   Transporter,
+  TransportOptions,
 } from 'nodemailer';
 
 // Helpers
