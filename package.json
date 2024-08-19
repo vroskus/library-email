@@ -23,12 +23,12 @@
     "@types/nodemailer": "^6.4.15",
     "html-to-text": "^9.0.5",
     "lodash": "^4.17.21",
-    "nodemailer": "^6.9.13"
+    "nodemailer": "^6.9.14"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/lodash": "^4.17.1",
-    "@types/node": "^20.12.10",
+    "@types/lodash": "^4.17.7",
+    "@types/node": "^22.4.1",
     "@vroskus/eslint-config": "^1.0.11",
     "typescript": "^5.4.5"
   }
