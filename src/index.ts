@@ -15,9 +15,19 @@ import type {
   $Config as Config,
 } from './types';
 
+export type $Config = Config;
+
 type $Auth = {
-  pass: string,
-  user: string,
+  pass: string;
+  user: string;
+};
+
+type $SendEmailResponse = {
+  accepted: Array<string>;
+  messageId: string;
+  pending: Array<string>;
+  rejected: Array<string>;
+  response: string;
 };
 
 type $SendMailParams = {
@@ -30,26 +40,16 @@ type $SendMailParams = {
   to: Array<string> | string;
 };
 
-type $SendEmailResponse = {
-  accepted: Array<string>;
-  messageId: string;
-  pending: Array<string>;
-  rejected: Array<string>;
-  response: string;
+type $Transporter = Transporter | {
+  sendMail: (arg0: $SendMailParams) => Promise<$SendEmailResponse>;
 };
 
-type $TransporterParams = {
+type $TransporterParams = TransportOptions & {
   auth?: $Auth;
   host: string;
   port: string;
   secure?: boolean;
-} & TransportOptions;
-
-type $Transporter = {
-  sendMail: (arg0: $SendMailParams) => Promise<$SendEmailResponse>;
-} | Transporter;
-
-export type $Config = Config;
+};
 
 class EmailService<C extends Config> {
   from: string;
