@@ -31,10 +31,10 @@ type $SendEmailResponse = {
 };
 
 type $SendMailParams = {
-  bcc?: Array<string> | string | void;
+  bcc?: Array<string> | string;
   from: string;
   html: string;
-  replyTo?: string | void;
+  replyTo?: string;
   subject: string;
   text: string;
   to: Array<string> | string;
@@ -83,9 +83,9 @@ class EmailService<C extends Config> {
     username,
   }: {
     host: string;
-    password?: string | void;
+    password?: string;
     port: string;
-    username?: string | void;
+    username?: string;
   }): void {
     this.transporter = {
       sendMail: async ({
