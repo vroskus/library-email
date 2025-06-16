@@ -1,5 +1,6 @@
 // Global Types
 import type {
+  SendMailOptions,
   Transporter,
   TransportOptions,
 } from 'nodemailer';
@@ -31,6 +32,7 @@ type $SendEmailResponse = {
 };
 
 type $SendMailParams = {
+  attachments?: SendMailOptions['attachments'];
   bcc?: Array<string> | string;
   from: string;
   html: string;
