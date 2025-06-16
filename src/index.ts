@@ -31,14 +31,7 @@ type $SendEmailResponse = {
   response: string;
 };
 
-type $SendMailParams = {
-  attachments?: SendMailOptions['attachments'];
-  bcc?: Array<string> | string;
-  from: string;
-  html: string;
-  replyTo?: string;
-  subject: string;
-  text: string;
+type $SendMailParams = SendMailOptions & {
   to: Array<string> | string;
 };
 
@@ -96,7 +89,7 @@ class EmailService<C extends Config> {
         subject,
         text,
         to,
-      }) => {
+      }: $SendMailParams) => {
         // eslint-disable-next-line no-console
         console.log(
           '\x1b[33m',
@@ -110,7 +103,7 @@ class EmailService<C extends Config> {
         );
 
         return {
-          accepted: Array.isArray(to) ? to : [to],
+          accepted: typeof to === 'string' ? [to] : to,
           messageId: '0',
           pending: [],
           rejected: [],
@@ -141,19 +134,22 @@ class EmailService<C extends Config> {
   }
 
   async sendMail({
+    attachments,
     bcc,
     content,
     replyTo,
     subject,
     to,
   }: {
+    attachments?: SendMailOptions['attachments'];
     bcc?: Array<string> | string;
     content: string;
     replyTo?: string;
     subject: string;
     to: Array<string> | string;
   }): Promise<string> {
-    const params = {
+    const params: $SendMailParams = {
+      attachments,
       bcc,
       from: this.from,
       html: content,
