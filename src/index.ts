@@ -90,8 +90,7 @@ class EmailService<C extends Config> {
         text,
         to,
       }: $SendMailParams) => {
-        // eslint-disable-next-line no-console
-        console.log(
+        console.info(
           '\x1b[33m',
           'EmailService.sendEmail',
           '\x1b[0m\x1b[90m',
@@ -161,12 +160,6 @@ class EmailService<C extends Config> {
 
     if (this.transporter !== null) {
       const info: $SendEmailResponse = await this.transporter.sendMail(params);
-
-      // eslint-disable-next-line no-console
-      console.log(
-        'info',
-        info,
-      );
 
       return info.messageId;
     }
