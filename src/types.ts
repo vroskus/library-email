@@ -1,4 +1,5 @@
 export type $Config = {
+  debug?: boolean;
   email: string;
   from: string;
   host: string;

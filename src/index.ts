@@ -47,11 +47,14 @@ type $TransporterParams = TransportOptions & {
 };
 
 class EmailService<C extends Config> {
+  #debug: boolean | undefined;
+
   from: string;
 
   transporter: $Transporter | null;
 
   constructor({
+    debug,
     email,
     from,
     host,
@@ -69,6 +72,8 @@ class EmailService<C extends Config> {
       port: port || '25',
       username,
     });
+
+    this.#debug = debug;
   }
 
   #setupTransporter({
@@ -160,6 +165,13 @@ class EmailService<C extends Config> {
 
     if (this.transporter !== null) {
       const info: $SendEmailResponse = await this.transporter.sendMail(params);
+
+      if (this.#debug) {
+        console.info(
+          'EmailService:',
+          info,
+        );
+      }
 
       return info.messageId;
     }
