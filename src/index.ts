@@ -107,10 +107,14 @@ class EmailService<C extends Config> {
         );
 
         return {
-          accepted: typeof to === 'string' ? [to] : to,
+          accepted: typeof to === 'string' ? [
+            to,
+          ] : to,
           messageId: '0',
-          pending: [],
-          rejected: [],
+          pending: [
+          ],
+          rejected: [
+          ],
           response: 'Email sent by dummy service',
         };
       },
